@@ -9,12 +9,10 @@ before_script:
 notifications:
   email:
     recipients:
-      - smrycek@ncsu.edu
-      - ldshehan@ncsu.edu
-      - shpatel5@ncsu.edu
+      - bdill@bandwidth.com
     on_success: change
     on_failure: always
 deploy:
   provider: heroku
-  api_key: 7b1fcf62-bf4b-4f5f-88d2-a282c5050456
+  api_key: 7aaf754d-8d92-4c03-80a1-e79456c8f243
   app: on-call-escalation-manager
