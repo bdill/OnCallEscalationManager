@@ -5,6 +5,10 @@ var mongoose = require('mongoose'),
     path = require('path'),
     app = require('./app.js');
 
+console.log("Loading Heroku config variables");
+var mongo_db_pass = process.env.MONGOHQ_PASSWORD;
+console.log("mongo pass: " + mongo_db_pass);
+
 //NConf Configuration
 nconf.env().file({ file: 'settings.json' });
 
