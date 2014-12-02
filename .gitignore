@@ -1,5 +1,9 @@
-
-/iisnode
-/.idea
-/coverage
+# Node files
 node_modules
+npm-debug.log
+
+# Test files
+/coverage
+
+# IntelliJ files
+/.idea
