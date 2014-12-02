@@ -15,4 +15,4 @@ notifications:
 deploy:
   provider: heroku
   api_key: 7aaf754d-8d92-4c03-80a1-e79456c8f243
-  app: on-call-escalation-manager
+  app: nameless-forest-5377
