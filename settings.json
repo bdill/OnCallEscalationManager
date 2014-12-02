@@ -3,7 +3,9 @@
     "MONGOHQ_URL": "mongodb://kahana.mongohq.com:10070/app28953073"
   },
   "testdatabase": {
-     "MONGOHQ_URL": "mongodb://linus.mongohq.com:10037/app30673447"
+     "MONGOHQ_URL": "mongodb://linus.mongohq.com:10037/app30673447",
+     "MONGOHQ_USERNAME": "heroku",
+     "MONGOHQ_PASSWORD": "IZlkSuu7bFo2_xlFTto_yvUS-Ur5F_HV0avcwg-ChPLQEbMnT5Bsi92mQAWcHViPChhhX7QVa8_9yg_ZSuOzFw"
   },
   "host": {
     "headURL": "http://nameless-forest-5377.herokuapp.com"
