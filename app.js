@@ -8,6 +8,13 @@ var express = require('express'),
 //NConf Configuration
 nconf.env().file({ file: 'settings.json' });
 
+var google_client_id = nconf.get('GOOGLE_CLIENT_ID'),
+    google_client_secret = nconf.get('GOOGLE_CLIENT_SECRET');
+
+if (!google_client_id || !google_client_secret) {
+    console.log("Google authentication service credentials not set");
+}
+
 //From: https://github.com/jaredhanson/passport-google/blob/master/examples/signon/app.js
 // Passport session setup.
 // To support persistent login sessions, Passport needs to be able to
@@ -30,10 +37,10 @@ passport.deserializeUser(function(obj, done) {
 // callback with a user object.
 passport.use(new GoogleStrategy({
     prompt: 'select_account',
-    clientID: nconf.get("Google:ClientID"),
-    clientSecret: nconf.get("Google:ClientSecret"),
-    callbackURL: nconf.get("host:headURL") + "/auth/google/callback"
-    //callbackURL: "http://localhost:3000/auth/google/callback"
+    clientID: google_client_id,
+    clientSecret: google_client_secret,
+//    callbackURL: nconf.get("host:headURL") + "/auth/google/callback"
+    callbackURL: "http://localhost:3000/auth/google/callback"
     // ************************************************
     //  Comment out one of the following above.
     //  When pushing make sure nconf.get("host:headURL") + "/auth/google/callback"
@@ -43,12 +50,11 @@ passport.use(new GoogleStrategy({
     function (accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
         process.nextTick(function () {
-            console.log(JSON.stringify(profile));
-            console.log(profile._json.hd);
+            console.log("Authenticated " + profile.displayName);
             if (profile._json.hd == 'bandwidth.com') {
                 return done(null, profile);
             } else {
-                return done(null, null);
+                return done(null, false, { message: 'Only bandwidth.com accounts are allowed.' });
             }
         });
     }

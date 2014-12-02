@@ -5,28 +5,19 @@ var mongoose = require('mongoose'),
     path = require('path'),
     app = require('./app.js');
 
-console.log("Loading Heroku config variables");
-var mongo_db_pass = process.env.MONGOHQ_PASSWORD;
-console.log("mongo pass: " + mongo_db_pass);
-
 //NConf Configuration
 nconf.env().file({ file: 'settings.json' });
 
 //Mongoose Configuration
-mongoose.connect(nconf.get('database:MONGOHQ_URL'));
-mongoose.connection.once('connected', function() {
-    //console.log("Database connected");
-});
-mongoose.connection.once('error', function() {
-    //console.log("Database Error");
-});
+mongoose.connect(nconf.get('database:MONGOHQ_URL'),
+    { user: nconf.get('MONGOHQ_USERNAME'), pass: nconf.get('MONGOHQ_PASSWORD') });
+mongoose.connection.on('error', function() { console.log("Database error") });
+mongoose.connection.once('open', function() { console.log("Database connected") });
 
 //Create Twilio Instance
-var twilio = require('twilio')(nconf.get("twilio:AccountSID"), nconf.get("twilio:AuthToken"));
-
+var twilio = require('twilio')(nconf.get('TWILIO_ACCOUNT_SID'), nconf.get('TWILIO_AUTH_TOKEN'));
 
 //Server Creation
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
-

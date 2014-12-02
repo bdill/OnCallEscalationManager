@@ -24,10 +24,9 @@ module.exports = function (app) {
         res.render('Index', { user: req.user });
     })
 
-
     function ensureAuthenticated(req, res, next) {
-        if (req.isAuthenticated()) { console.log('Were authenticated'); return next(); }
-        console.log("Not authed");
+        if (req.isAuthenticated()) { return next(); }
+        console.log("Not authenticated. Redirecting to login page.");
         res.redirect('/login');
     }
 };
