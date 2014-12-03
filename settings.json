@@ -1,6 +1,6 @@
 {
   "database": {
-    "MONGOHQ_URL": "mongodb://kahana.mongohq.com:10070/app28953073"
+    "MONGOHQ_URL": "mongodb://candidate.45.mongolayer.com:10287/on_call_escalation"
   },
   "testdatabase": {
      "MONGOHQ_URL": "mongodb://linus.mongohq.com:10037/app30673447",
