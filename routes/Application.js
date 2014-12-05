@@ -7,6 +7,8 @@ module.exports = function (app) {
     //Base Application Handling
     app.get('/api/applications/', applicationHandler.handleGet);
     app.get('/api/applications/:appName', applicationHandler.handleGet);
+    app.get('/api/applications/:appName/calls', applicationHandler.handleGetCalls);
+    app.get('/api/applications/:appName/calls/:conferenceId/participants', applicationHandler.handleGetCallParticipants);
     app.post('/api/applications/', applicationHandler.handleAdd);
     app.delete('/api/applications/:appName', applicationHandler.handleDelete);
     app.put('/api/applications/:appName', applicationHandler.handleUpdate);

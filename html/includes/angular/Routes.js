@@ -1,7 +1,7 @@
 var OCEM = angular.module('OnCallEscalationManager', ['ngRoute', 'ui.bootstrap', 'ui.mask']);
 
 OCEM.controller('indexCtlr', ['$scope','$http', indexCtrl]);
-OCEM.controller('detailCtlr', ['$scope','$http', '$routeParams', detailCtrl]);
+OCEM.controller('detailCtlr', ['$scope','$http', '$routeParams', '$timeout', detailCtrl]);
 OCEM.controller('newAppCtrl', ['$scope','$http', '$route', newAppCtrl]);
 OCEM.controller('newStaffCtrl', ['$scope', '$http', '$route', '$routeParams', newStaffCtrl]);
 OCEM.controller('removeAppCtrl', ['$scope', '$http', '$modal', '$routeParams', '$location', removeAppCtrl]);
@@ -84,7 +84,7 @@ function indexCtrl($scope, $http) {
     });
 }
 
-function detailCtrl($scope, $http, $routeParams) {
+function detailCtrl($scope, $http, $routeParams, $timeout) {
     $scope.method = 'GET';
     $scope.url = '/api/applications/' + $routeParams.appName;
     $scope.appName = $routeParams.appName;
@@ -226,9 +226,57 @@ function detailCtrl($scope, $http, $routeParams) {
         $scope.app = data.results || "Request failed";
         $scope.status = status;
     });
+
+    var timeout_promise;
+    $scope.conference = {};
+
+    (function tick() {
+        $http.get('/api/applications/' + $routeParams.appName + '/calls').
+            success(function (data, status) {
+                var conferenceSid = getConferenceSid(data.results);
+
+                if (conferenceSid) {
+                    $scope.conference.status = "In Progress";
+
+                    $http.get('/api/applications/' + $routeParams.appName + '/calls/' + conferenceSid + '/participants').
+                    success(function (data, status) {
+                        $scope.conference.participants = data.results;
+                    }).
+                    error(function (data, status) {
+                        console.log("Unable to fetch call participants for " + conferenceSid);
+                        $scope.apps = data.results;
+                        $scope.status = status;
+                        $scope.conference.participants = data.results;
+                    });
+                } else {
+                    $scope.conference.status = "Inactive";
+                    delete $scope.conference.participants;
+                }
+
+                timeout_promise = $timeout(tick, 5000);
+            }).
+            error(function (data, status) {
+                console.log("Unable to fetch calls");
+                $scope.apps = data.results;
+                $scope.status = status;
+            });
+
+    })();
+
+    $scope.$on('$destroy', function() {
+        console.log("destroyed");
+        $timeout.cancel(timeout_promise);
+    });
 }
 
-function newAppCtrl($scope, $http, $route) { 
+function getConferenceSid(results) {
+    if (results.conferences.length > 0) {
+        console.log("conf sid: " + results.conferences[0].sid);
+        return results.conferences[0].sid;
+    }
+}
+
+function newAppCtrl($scope, $http, $route) {
     $scope.form = {};
     $scope.form.appName = "";
     $scope.form.appPhone = "";

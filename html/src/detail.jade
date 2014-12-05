@@ -66,6 +66,28 @@ div
     div.row
         div.col-xs-12
             div.panel.panel-default
+                div.panel-heading Conference Status
+                div.panel-body
+                    div.row
+                        div.col-xs-12.col-lg-6.medium-small.medium-line
+                            i.fa.fa-phone.fa-2x
+                            span.left-gap Current Status: {{ conference.status }}
+                    div.row
+                        div.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="participant in conference.participants | orderBy:'Name'")
+                            div.panel(ng-class="{'panel-red' : $index%5==4, 'panel-purple' : $index%5==0, 'panel-blue' : $index%5==1, 'panel-green' : $index%5==2, 'panel-yellow' : $index%5==3}")
+                                div.panel-heading
+                                    div.row(style="line-height: 24px;")
+                                        div.col-xs-10.col-sm-8
+                                            i.fa.fa-user.iconImage
+                                            | {{participant}}
+                                        div.col-xs-1.col-sm-2(style="height: 24px;")
+                                            i.fa.fa-pencil.pull-right.smallIcon.tiny-top-margin
+                                        div.col-xs-1.col-sm-2
+                                            i.fa.fa-times.pull-right.smallIcon.tiny-top-margin
+    hr
+    div.row
+        div.col-xs-12
+            div.panel.panel-default
                 div.panel-heading Staff
                     i.fa.fa-plus-square.BWGray.pull-right.mediumIcon(style="margin-top:-6px;", ng-click="$parent.isCollapsed = !$parent.isCollapsed", tooltip-placement="left" tooltip="Add New Staff")
                 div.panel-body
