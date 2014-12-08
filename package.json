@@ -51,5 +51,9 @@
   "scripts": {
     "test": ".\\node_modules\\.bin\\istanbul cover node_modules/mocha/bin/_mocha",
     "start": "node ./Server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdill/OnCallEscalationManager.git"
   }
 }
