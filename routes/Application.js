@@ -13,7 +13,6 @@ module.exports = function (app) {
     app.delete('/api/applications/:appName', applicationHandler.handleDelete);
     app.put('/api/applications/:appName', applicationHandler.handleUpdate);
 
-
     //Application Staff Handling
     app.get('/api/applications/:appName/staff/', staffHandler.handleGet);
     app.get('/api/applications/:appName/staff/:phone', staffHandler.handleGet);

@@ -483,6 +483,7 @@ function segmentCtrl($scope, $http, $modal, $route, $routeParams, $location){
         if ($scope.form.SecondaryStaff) {
             dataObject.SecondaryStaff = $scope.form.SecondaryStaff.Primary;
         }
+        dataObject.Editor = "someguy";
 
         var responsePromise = $http.post("/api/applications/" + $routeParams.appName + "/segments/", dataObject, {});
         responsePromise.success(function (data, status) {
