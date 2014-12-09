@@ -158,6 +158,9 @@ div
         div.col-xs-12
             div.panel.panel-default
                 div.panel-heading On Call Schedule
+                    div.pull-right
+                        a(href="/Applications/{{app.Name}}/history")
+                            i.fa.fa-times.BWGray.mediumIcon(style="margin-top:-6px;", tooltip-placement="left", tooltip="Show History")
                 div
                     ul.list-group.squareCorners.segmentList
                         li.list-group-item.segmentItem.squareCorners(ng-repeat="segment in app.Segments", ng-class-odd="", ng-class-even="'evenSegment'")

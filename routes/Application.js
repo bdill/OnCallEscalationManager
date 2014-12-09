@@ -1,6 +1,7 @@
 var applicationHandler = require('../lib/handlers/ApplicationHandler.js'),
     staffHandler = require('../lib/handlers/StaffHandler.js'),
     segmentHandler = require('../lib/handlers/SegmentHandler.js')
+    historyHandler = require('../lib/handlers/HistoryHandler.js')
 
 module.exports = function (app) {
 
@@ -26,6 +27,9 @@ module.exports = function (app) {
     app.post('/api/applications/:appName/segments/', segmentHandler.handleAdd);
     app.delete('/api/applications/:appName/segments/:startDate', segmentHandler.handleDelete);
     app.put('/api/applications/:appName/segments/:startDate', segmentHandler.handleUpdate);
+
+    // Application Segment Edit History Handling
+    app.get('/api/applications/:appName/history', historyHandler.handleGet);
 
     function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) { return next(); }

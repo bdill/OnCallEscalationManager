@@ -11,7 +11,7 @@ OCEM.controller('editStaffCtrl', ['$scope', '$http', '$route', '$routeParams', e
 OCEM.controller('removeStaffCtrl', ['$scope', '$http', '$route', '$routeParams', removeStaffCtrl]);
 OCEM.controller('segmentCtrl', ['$scope', '$http', '$modal', '$route', '$routeParams', '$location', segmentCtrl]);
 OCEM.controller('failureCtlr', ['$scope','$http', failureCtrl]);
-
+OCEM.controller('historyCtrl', ['$scope', '$http', '$routeParams', historyCtrl]);
 
 OCEM.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
@@ -24,6 +24,10 @@ OCEM.config(['$routeProvider', '$locationProvider',
         .when('/Applications/:appName', {
             templateUrl: '/partials/detail',
             controller: 'detailCtlr'
+        })
+        .when('/Applications/:appName/history', {
+            templateUrl: '/partials/history',
+            controller: 'historyCtrl'
         })
         .when('/failure', {
             templateUrl: '/partials/failure',
@@ -514,6 +518,20 @@ function segmentCtrl($scope, $http, $modal, $route, $routeParams, $location){
     $scope.getStaffString = function(staff) {
         return staff.Name + " - " + staff.Primary;
     }
+}
+
+function historyCtrl($scope, $http, $routeParams) {
+    $http.get('/api/applications/' + $routeParams.appName + '/history').
+    success(function (data, status) {
+        $scope.status = status;
+        $scope.history = data.results;
+
+        console.log("history: " + $scope.history);
+    }).
+    error(function (data, status) {
+        $scope.app = data.results || "Request failed";
+        $scope.status = status;
+    });
 }
 
 function currentSegment(segments, callback) {
