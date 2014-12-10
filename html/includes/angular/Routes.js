@@ -487,7 +487,7 @@ function segmentCtrl($scope, $http, $modal, $route, $routeParams, $location){
         if ($scope.form.SecondaryStaff) {
             dataObject.SecondaryStaff = $scope.form.SecondaryStaff.Primary;
         }
-        dataObject.Editor = "someguy";
+        dataObject.Editor = "Brian Dill";
 
         var responsePromise = $http.post("/api/applications/" + $routeParams.appName + "/segments/", dataObject, {});
         responsePromise.success(function (data, status) {
@@ -521,12 +521,20 @@ function segmentCtrl($scope, $http, $modal, $route, $routeParams, $location){
 }
 
 function historyCtrl($scope, $http, $routeParams) {
+    var segmentEditHistory;
+
     $http.get('/api/applications/' + $routeParams.appName + '/history').
     success(function (data, status) {
         $scope.status = status;
-        $scope.history = data.results;
-
-        console.log("history: " + $scope.history);
+        $scope.history = data.results.SegmentEditHistory;
+        segmentEditHistory = data.results.SegmentEditHistory;
+        segmentEditHistory.forEach(function(record) {
+            record.EditDateOnly = moment(record.EditDate).format("MM/DD/YYYY");
+            record.EditTimeOnly = moment(record.EditDate).format("h:mm:ss a");
+            record.ActionDescription = record.Action + " by " + record.Editor;
+            record.StartDate = moment(record.StartDate).format("MM/DD/YYYY");
+            record.EndDate = moment(record.EndDate).format("MM/DD/YYYY");
+        })
     }).
     error(function (data, status) {
         $scope.app = data.results || "Request failed";

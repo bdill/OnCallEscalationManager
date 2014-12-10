@@ -24,24 +24,25 @@
     "express"
   ],
   "dependencies": {
+    "chai": "1.9.1",
+    "commander": "~2.3.0",
+    "ejs": "1.0.0",
+    "express": "~3.1.0",
+    "istanbul": "0.3.2",
+    "jade": "1.8.1",
+    "jscoverage": "0.5.6",
+    "jshint": "2.5.5",
+    "mocha": "1.21.4",
+    "moment": "2.8.3",
     "mongoose": "~3.8.15",
     "nconf": "~0.6.7",
-    "commander": "~2.3.0",
-    "promptly": "0.2.0",
-    "mocha": "1.21.4",
-    "chai": "1.9.1",
-    "jade": "1.8.1",
-    "jshint": "2.5.5",
-    "jscoverage": "0.5.6",
-    "istanbul": "0.3.2",
-    "twilio": "1.7.0",
-    "express": "~3.1.0",
-    "q": "1.0.1",
-    "ejs": "1.0.0",
-    "supertest": "0.14.0",
-    "moment": "2.8.3",
+    "passport": "0.2.1",
     "passport-google-oauth": "0.1.5",
-    "passport": "0.2.1"
+    "promptly": "0.2.0",
+    "q": "1.0.1",
+    "supertest": "0.14.0",
+    "supervisor": "^0.6.0",
+    "twilio": "1.7.0"
   },
   "noAnalyze": true,
   "license": "Apache",
@@ -50,7 +51,7 @@
   },
   "scripts": {
     "test": ".\\node_modules\\.bin\\istanbul cover node_modules/mocha/bin/_mocha",
-    "start": "node ./Server.js"
+    "start": "supervisor -w lib,html/includes/angular,routes ./Server.js"
   },
   "repository": {
     "type": "git",

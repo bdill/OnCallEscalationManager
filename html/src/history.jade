@@ -2,11 +2,26 @@ div.row
     div.col-lg-12
         div.page-header History
 div
-    div.row(ng-repeat="record in history | orderBy:'EditDate'")
-        div.col-lg-7.col-md-12(style="float: none; margin: 0 auto;")
-            div.panel
-                div.panel-footer
-                    span.pull-left {{ record }}
-                    span.pull-right
-                        i.fa.fa-arrow-circle-right
-                    div.clearfix
+    div.row
+        div.col-md-12(style="float: none; margin: 0 auto;")
+            table.table
+                thead
+                    tr
+                        th Date
+                        th Time
+                        th Action
+                        th On-Call Dates
+                        th Primary
+                        th Secondary
+                tbody(ng-repeat="record in history | orderBy:'EditDate'")
+                    tr
+                        td {{ record.EditDateOnly }}
+                        td {{ record.EditTimeOnly }}
+                        td {{ record.ActionDescription }}
+                        td {{ record.StartDate }} - {{ record.EndDate }}
+                        td
+                            a(href="#", tooltip="{{ record.PrimaryStaff.Primary }}")
+                                span {{ record.PrimaryStaff.Name }}
+                        td
+                            a(href="#", tooltip="{{ record.SecondaryStaff.Primary }}")
+                                span {{ record.SecondaryStaff.Name }}

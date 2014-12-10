@@ -38,6 +38,10 @@ html(lang="en")
         script(src="/scripts/angular-route.min.js")
         script(src="/angular/Routes.js")
 
+        // Pass user info to Angular
+        script
+            var users = !{JSON.stringify(user)}
+
     body(ng-app="OnCallEscalationManager")
         div#wrapper
             //-- Navigation --
