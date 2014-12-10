@@ -72,6 +72,9 @@ div
                         div.col-xs-12.col-lg-6.medium-small.medium-line
                             i.fa.fa-phone.fa-2x
                             span.left-gap Current Status: {{ conference.status }}
+                        div.col-xs-12.col-lg-6.medium-small.medium-line
+                            i.fa.fa-clock-o.fa-2x
+                            span.left-gap Start Time: {{ conference.dateCreated }}
                     div.row
                         div.col-xs-12.col-sm-6.col-md-4.col-lg-3(ng-repeat="participant in conference.participants | orderBy:'Name'")
                             div.panel(ng-class="{'panel-red' : $index%5==4, 'panel-purple' : $index%5==0, 'panel-blue' : $index%5==1, 'panel-green' : $index%5==2, 'panel-yellow' : $index%5==3}")

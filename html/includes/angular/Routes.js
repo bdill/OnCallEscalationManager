@@ -241,6 +241,7 @@ function detailCtrl($scope, $http, $routeParams, $timeout) {
 
                 if (conferenceSid) {
                     $scope.conference.status = "In Progress";
+                    $scope.conference.dateCreated = getConferenceDateCreated(data.results);
 
                     $http.get('/api/applications/' + $routeParams.appName + '/calls/' + conferenceSid + '/participants').
                     success(function (data, status) {
@@ -254,6 +255,7 @@ function detailCtrl($scope, $http, $routeParams, $timeout) {
                     });
                 } else {
                     $scope.conference.status = "Inactive";
+                    $scope.conference.dateCreated = "N/A";
                     delete $scope.conference.participants;
                 }
 
@@ -275,8 +277,13 @@ function detailCtrl($scope, $http, $routeParams, $timeout) {
 
 function getConferenceSid(results) {
     if (results.conferences.length > 0) {
-        console.log("conf sid: " + results.conferences[0].sid);
         return results.conferences[0].sid;
+    }
+}
+
+function getConferenceDateCreated(results) {
+    if (results.conferences.length > 0) {
+        return moment(results.conferences[0].dateCreated).format("MM/DD/YYYY");
     }
 }
 

@@ -584,13 +584,14 @@ describe('ApplicationController', function () {
             segment.StartDate = new moment(new Date('1/15/2020')).utc().hour(0);
             segment.EndDate = new moment(new Date('1/22/2020')).utc().hour(0);
             segment.PrimaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa7');
+            var editor = "someguy";
 
             applicationController.add(toAdd, function (err, doc) {
                 if (!err) {
                     should.exist(doc);
                     doc.Staff.length.should.equal(0);
 
-                    applicationController.addSegment(doc._id, segment, function(err, doc) {
+                    applicationController.addSegment(doc._id, segment, editor, function(err, doc) {
                        should.not.exist(err);
                        should.exist(doc); 
                        doc.Segments.length.should.equal(1);
@@ -610,19 +611,20 @@ describe('ApplicationController', function () {
             segment.StartDate = new moment(new Date('1/15/2020')).utc().hour(0);
             segment.EndDate = new moment(new Date('1/22/2020')).utc().hour(0);
             segment.PrimaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa7');
+            var editor = "someguy";
 
             applicationController.add(toAdd, function (err, doc) {
                 if (!err) {
                     should.exist(doc);
                     doc.Staff.length.should.equal(0);
 
-                    applicationController.addSegment(doc._id, segment, function(err, doc) {
+                    applicationController.addSegment(doc._id, segment, editor, function(err, doc) {
                        should.not.exist(err);
                        should.exist(doc); 
                        doc.Segments.length.should.equal(1);
                        doc.Segments[0].StartDate.getFullYear().should.equal(2020);
                        
-                       applicationController.addSegment(doc._id, segment, function(err, doc) {
+                       applicationController.addSegment(doc._id, segment, editor, function(err, doc) {
                            should.not.exist(err);
                            should.exist(doc); 
                            doc.Segments.length.should.equal(1);
@@ -652,13 +654,14 @@ describe('ApplicationController', function () {
             segment.StartDate = new moment(new Date('1/15/2020')).utc().hour(0);
             segment.EndDate = new moment(new Date('1/22/2020')).utc().hour(0);
             segment.PrimaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa7');
+            var editor = "someguy";
 
             applicationController.add(toAdd, function (err, doc) {
                 if (!err) {
                     should.exist(doc);
                     doc.Staff.length.should.equal(0);
 
-                    applicationController.addSegment(doc._id, segment, function(err, doc) {
+                    applicationController.addSegment(doc._id, segment, editor, function(err, doc) {
                        should.not.exist(err);
                        should.exist(doc); 
                        doc.Segments.length.should.equal(1);

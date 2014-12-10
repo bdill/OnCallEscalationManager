@@ -60,6 +60,7 @@ var assert = require("assert"),
                 segmentToAdd2.EndDate = new moment(new Date("05-27-2015")).utc().hour(0);
                 segmentToAdd2.PrimaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa7')
                 segmentToAdd2.SecondaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa8')
+                var editor = "someguy";
 
                 applicationController.add(toAdd, function (err, doc) {
                     //check that there is no error
@@ -70,13 +71,13 @@ var assert = require("assert"),
                     assert.equal(doc.Name, "test");
                     assert.equal(doc.Phone, "(555) 555-5555");
 
-                    applicationController.addSegment(doc._id, segmentToAdd, function (err, doc) {
+                    applicationController.addSegment(doc._id, segmentToAdd, editor, function (err, doc) {
                         //check that there is no error
                         should.not.exist(err);
                         should.exist(doc);
                         doc.should.be.an('object');
                         doc.Segments.length.should.equal(1);
-                        applicationController.addSegment(doc._id, segmentToAdd2, function (err, doc) {
+                        applicationController.addSegment(doc._id, segmentToAdd2, editor, function (err, doc) {
                             //check that there is no error
                             should.not.exist(err);
                             should.exist(doc);
@@ -121,6 +122,7 @@ var assert = require("assert"),
                 segmentToAdd2.EndDate = new moment(new Date("05-27-2015")).utc().hour(0);
                 segmentToAdd2.PrimaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa7');
                 segmentToAdd2.SecondaryStaff = new mongoose.Types.ObjectId('540e2b0caddc924830899aa8');
+                var editor = "someguy";
 
                 applicationController.add(toAdd, function (err, doc) {
                     //check that there is no error
@@ -131,13 +133,13 @@ var assert = require("assert"),
                     assert.equal(doc.Name, "test");
                     assert.equal(doc.Phone, "(555) 555-5555");
 
-                    applicationController.addSegment(doc._id, segmentToAdd, function (err, doc) {
+                    applicationController.addSegment(doc._id, segmentToAdd, editor, function (err, doc) {
                         //check that there is no error
                         should.not.exist(err);
                         should.exist(doc);
                         doc.should.be.an('object');
                         doc.Segments.length.should.equal(1);
-                        applicationController.addSegment(doc._id, segmentToAdd2, function (err, doc) {
+                        applicationController.addSegment(doc._id, segmentToAdd2, editor, function (err, doc) {
                             //check that there is no error
                             should.not.exist(err);
                             should.exist(doc);
@@ -752,6 +754,7 @@ var assert = require("assert"),
                 var segmentToAdd = new Object();
                 segmentToAdd.StartDate = new moment(new Date("05-20-2015")).utc().hour(0);
                 segmentToAdd.EndDate = new moment(new Date("05-27-2015")).utc().hour(0);
+                var editor = "someguy";
 
                 applicationController.add(toAdd, function (err, doc) {
                     staffController.add(staffToAdd, function (err, staff) {
@@ -761,7 +764,7 @@ var assert = require("assert"),
                                 staffID2 = staff._id;
                                 applicationController.addToStaff(doc._id, staff, function (err, doc) {
                                     segmentToAdd.PrimaryStaff = staffID;
-                                    applicationController.addSegment(doc._id, segmentToAdd, function(err, doc) {
+                                    applicationController.addSegment(doc._id, segmentToAdd, editor, function(err, doc) {
                                         appID = doc._id;
                                         done();
                                     });
@@ -1000,12 +1003,13 @@ var assert = require("assert"),
                 var segmentToAdd = new Object();
                 segmentToAdd.StartDate = new moment(new Date("05-20-2015")).utc().hour(0);
                 segmentToAdd.EndDate = new moment(new Date("05-27-2015")).utc().hour(0);
+                var editor = "someguy";
 
                 applicationController.add(toAdd, function (err, doc) {
                     staffController.add(staffToAdd, function (err, staff) {
                         applicationController.addToStaff(doc._id, staff, function (err, doc) {
                             segmentToAdd.PrimaryStaff = doc.Staff[0]._id;
-                            applicationController.addSegment(doc._id, segmentToAdd, function(err, doc) {
+                            applicationController.addSegment(doc._id, segmentToAdd, editor, function(err, doc) {
                                 appID = doc._id;
                                 done();
                             });
