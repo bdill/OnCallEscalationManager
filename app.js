@@ -39,8 +39,8 @@ passport.use(new GoogleStrategy({
     prompt: 'select_account',
     clientID: google_client_id,
     clientSecret: google_client_secret,
-//    callbackURL: nconf.get("host:headURL") + "/auth/google/callback"
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: nconf.get("host:headURL") + "/auth/google/callback"
+//    callbackURL: "http://localhost:3000/auth/google/callback"
     // ************************************************
     //  Comment out one of the following above.
     //  When pushing make sure nconf.get("host:headURL") + "/auth/google/callback"
