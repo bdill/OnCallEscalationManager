@@ -179,3 +179,8 @@
 .evenSegment {
     background-color: #f7f7f7;
 }
+
+.chart {
+    width: 500px;
+    height: 500px;
+}

@@ -12,6 +12,10 @@ module.exports = function (app) {
         res.render('layout', { user: req.user });
     });
 
+    app.get('/Applications/:appName/timeSpent', ensureAuthenticated, function (req, res) {
+        res.render('layout', { user: req.user });
+    });
+
     app.get('/failure', function (req, res, next) {
         res.render('layout', { user: req.user });
     });
@@ -30,6 +34,10 @@ module.exports = function (app) {
 
     app.get('/partials/history', ensureAuthenticated, function (req, res) {
         res.render('history', { user: req.user });
+    })
+
+    app.get('/partials/timeSpent', ensureAuthenticated, function (req, res) {
+        res.render('timeSpent', { user: req.user });
     })
 
     function ensureAuthenticated(req, res, next) {

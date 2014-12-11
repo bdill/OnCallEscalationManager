@@ -1,11 +1,12 @@
 var applicationHandler = require('../lib/handlers/ApplicationHandler.js'),
     staffHandler = require('../lib/handlers/StaffHandler.js'),
-    segmentHandler = require('../lib/handlers/SegmentHandler.js')
-    historyHandler = require('../lib/handlers/HistoryHandler.js')
+    segmentHandler = require('../lib/handlers/SegmentHandler.js'),
+    historyHandler = require('../lib/handlers/HistoryHandler.js'),
+    timeSpentHandler = require('../lib/handlers/TimeSpentHandler.js');
 
 module.exports = function (app) {
 
-    //Base Application Handling
+    // Base Application Handling
     app.get('/api/applications/', applicationHandler.handleGet);
     app.get('/api/applications/:appName', applicationHandler.handleGet);
     app.get('/api/applications/:appName/calls', applicationHandler.handleGetCalls);
@@ -14,14 +15,14 @@ module.exports = function (app) {
     app.delete('/api/applications/:appName', applicationHandler.handleDelete);
     app.put('/api/applications/:appName', applicationHandler.handleUpdate);
 
-    //Application Staff Handling
+    // Application Staff Handling
     app.get('/api/applications/:appName/staff/', staffHandler.handleGet);
     app.get('/api/applications/:appName/staff/:phone', staffHandler.handleGet);
     app.post('/api/applications/:appName/staff/', staffHandler.handleAdd);
     app.delete('/api/applications/:appName/staff/:phone', staffHandler.handleDelete);
     app.put('/api/applications/:appName/staff/:phone', staffHandler.handleUpdate);
 
-    //Application Segments Handling
+    // Application Segments Handling
     app.get('/api/applications/:appName/segments/', segmentHandler.handleGet);
     app.get('/api/applications/:appName/segments/:startDate', segmentHandler.handleGet);
     app.post('/api/applications/:appName/segments/', segmentHandler.handleAdd);
@@ -30,6 +31,9 @@ module.exports = function (app) {
 
     // Application Segment Edit History Handling
     app.get('/api/applications/:appName/history', historyHandler.handleGet);
+
+    // Application Time Spent
+    app.get('/api/applications/:appName/timeSpent', timeSpentHandler.handleGet);
 
     function ensureAuthenticated(req, res, next) {
         if (req.isAuthenticated()) { return next(); }

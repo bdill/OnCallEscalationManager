@@ -1,4 +1,4 @@
-var OCEM = angular.module('OnCallEscalationManager', ['ngRoute', 'ui.bootstrap', 'ui.mask']);
+var OCEM = angular.module('OnCallEscalationManager', ['ngRoute', 'ui.bootstrap', 'ui.mask', 'googlechart']);
 
 OCEM.controller('indexCtlr', ['$scope','$http', indexCtrl]);
 OCEM.controller('detailCtlr', ['$scope','$http', '$routeParams', '$timeout', detailCtrl]);
@@ -12,6 +12,7 @@ OCEM.controller('removeStaffCtrl', ['$scope', '$http', '$route', '$routeParams',
 OCEM.controller('segmentCtrl', ['$scope', '$http', '$modal', '$route', '$routeParams', '$location', segmentCtrl]);
 OCEM.controller('failureCtlr', ['$scope','$http', failureCtrl]);
 OCEM.controller('historyCtrl', ['$scope', '$http', '$routeParams', historyCtrl]);
+OCEM.controller('timeSpentCtrl', ['$scope', '$http', '$routeParams', timeSpentCtrl]);
 
 OCEM.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
@@ -28,6 +29,10 @@ OCEM.config(['$routeProvider', '$locationProvider',
         .when('/Applications/:appName/history', {
             templateUrl: '/partials/history',
             controller: 'historyCtrl'
+        })
+        .when('/Applications/:appName/timeSpent', {
+            templateUrl: '/partials/timeSpent',
+            controller: 'timeSpentCtrl'
         })
         .when('/failure', {
             templateUrl: '/partials/failure',
@@ -53,7 +58,6 @@ OCEM.config(['$httpProvider', function ($httpProvider) {
         };
     });
 }])
-
 
 function failureCtrl($scope, $http) {
     //Nothing here yet.
@@ -542,6 +546,51 @@ function historyCtrl($scope, $http, $routeParams) {
             record.StartDate = moment(record.StartDate).format("MM/DD/YYYY");
             record.EndDate = moment(record.EndDate).format("MM/DD/YYYY");
         })
+    }).
+    error(function (data, status) {
+        $scope.app = data.results || "Request failed";
+        $scope.status = status;
+    });
+}
+
+function timeSpentCtrl($scope, $http, $routeParams) {
+    var staffMembers;
+
+    $http.get('/api/applications/' + $routeParams.appName + '/timeSpent').
+    success(function (data, status) {
+        $scope.status = status;
+        $scope.staffMembers = data.results;
+        staffMembers = data.results;
+
+        $scope.chartObject = {};
+
+        $scope.chartObject.data = {"cols": [
+            {id: "t", label: "Topping", type: "string"},
+            {id: "s", label: "Minutes On Call", type: "number"}
+        ], "rows": [
+            {c: [
+                {v: "Brian Dill"},
+                {v: 16}
+            ]},
+            {c: [
+                {v: "Scott Barstow"},
+                {v: 10}
+            ]},
+            {c: [
+                {v: "Jeff Jagoda"},
+                {v: 1}
+            ]},
+            {c: [
+                {v: "Call-O-Tron"},
+                {v: 45}
+            ]}
+        ]};
+
+        // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+        $scope.chartObject.type = 'BarChart';
+        $scope.chartObject.options = {
+            'title': 'Time On Call (in minutes)'
+        }
     }).
     error(function (data, status) {
         $scope.app = data.results || "Request failed";
